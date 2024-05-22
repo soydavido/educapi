@@ -26,6 +26,7 @@ import { EventProvider } from "./providers/event.provider";
 import { ListenerContract } from "@ant/framework/lib/src/events";
 import { TestListener } from "./listeners/test.listener";
 import { TestEventRoute } from "./routes/test_event.route";
+import { DatabaseRoute } from "./routes/database.route";
 
 export class Boostrap implements BoostrapInterface {
     /**
@@ -43,11 +44,7 @@ export class Boostrap implements BoostrapInterface {
     public routes:  (new() => RouteContract)[] = [
         HomeRoute,
         InfoRoute,
-        LogsListRoute,
-        TestWorkerRoute,
-        JobsMonitorRoute,
-        KafkaRoute,
-        TestEventRoute,
+        DatabaseRoute
     ];
 
     /**
