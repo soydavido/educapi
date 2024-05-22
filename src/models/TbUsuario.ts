@@ -4,8 +4,10 @@ import {
     Column,
 } from "typeorm";
 
+import { getEnv, Model, now } from "@ant/framework";
+
 @Entity("tb_usuario")
-export class TbUsuario {
+export class TbUsuario extends Model{
 
     @PrimaryGeneratedColumn()
     id_usuario!: number;
@@ -34,7 +36,8 @@ export class TbUsuario {
     @Column("numeric")
     id_documento!: number;
 
-    constructor(data: any) {
+    /* constructor(data: any) {
+        super();
         this.id_usuario = data.id_usuario;
         this.tx_nombre = data.tx_nombre;
         this.tx_apellido = data.tx_apellido;
@@ -44,5 +47,5 @@ export class TbUsuario {
         this.tx_alt_src_foto = data.tx_alt_src_foto;
         this.tx_email = data.tx_email;
         this.id_documento = data.id_documento;
-    }
+    } */
 }
