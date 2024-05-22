@@ -20,8 +20,10 @@ export class DatabaseRoute extends BaseRoute {
 
         return new Promise(async (resolve, reject) => {
     
+            let pendientes: any = [];
+
             try {
-                let pendientes = await TbUsuario.find();
+                pendientes = await TbUsuario.find();
                 Logger.info(pendientes);
             } catch (error) {
                 Logger.error(error);
@@ -33,6 +35,7 @@ export class DatabaseRoute extends BaseRoute {
                 message:  Lang.__("Welcome to the [{{name}}] microservice.", {
                     name: getEnv("APP_NAME", "Ant"),
                 }),
+                data: pendientes
             }));
         });
 
