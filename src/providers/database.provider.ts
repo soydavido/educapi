@@ -19,7 +19,7 @@ export default class DatabaseProvider extends ServiceProvider {
       const sqliteCon = new DataSource({
         type: "sqlite",
         database: "educapi",
-        entities: [path.join(__dirname, "..", "models/**/**.*")],
+        entities: [path.join(__dirname, "..", "database/models/**/**.*")],
         synchronize: true,
       });
 

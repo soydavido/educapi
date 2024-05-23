@@ -9,10 +9,10 @@ import {
     getEnv,
     Lang
 } from "@ant/framework";
-import { TbUsuario } from "../models/TbUsuario";
+import { TbUsuario } from "../database/models/TbUsuario";
 
-export class DatabaseRoute extends BaseRoute {
-    url = "/select";
+export class GetAllUsers extends BaseRoute {
+    url = "/api/v1/getAllUsers";
 
     method: Method = "get";
 
@@ -31,12 +31,9 @@ export class DatabaseRoute extends BaseRoute {
             }
 
             return resolve(response({
-                status: Lang.__("active"),
-                message:  Lang.__("Welcome to the [{{name}}] microservice.", {
-                    name: getEnv("APP_NAME", "Ant"),
-                }),
-                data: pendientes
-            }));
+                message: "Usuarios consultados correctamente",
+                usuarios: pendientes
+            },200));
         });
 
         

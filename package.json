@@ -24,6 +24,8 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@ant/framework": "github:systemson/ant_framework#adc4c421eefc4f1989a2a7e3d7af665bb343f0cd",
+    "class-validator": "^0.14.1",
+    "class-validator-i18n": "^1.1.0",
     "clean-install": "^1.0.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
