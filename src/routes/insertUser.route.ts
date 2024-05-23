@@ -1,44 +1,54 @@
 import {
-    BaseRoute,
-    Logger,
-    Method,
-    response,
-    Response,
-    Request
+  BaseRoute,
+  Logger,
+  Method,
+  response,
+  Response,
+  Request,
 } from "@ant/framework";
-import {
-    getEnv,
-    Lang
-} from "@ant/framework";
+import { getEnv, Lang } from "@ant/framework";
 import { Usuario } from "../models/Usuario.model";
-import { validate } from 'class-validator';
+import { validate } from "class-validator";
 
 export class InsertUser extends BaseRoute {
-    url = "/api/v1/insertUser";
+  url = "/api/v1/insertUser";
 
-    method: Method = "post";
+  method: Method = "post";
 
-    async handle(req: Request): Promise<Response> {
-
-        return new Promise(async (resolve, reject) => {
-            try {
-              let nuevoUsuario: Usuario = new Usuario(req.body);
-              const errors = await validate(nuevoUsuario);
-              if (errors.length > 0) {
-                Logger.error("Error al validar el usuario");
-                Logger.error(errors);
-                return reject(response().json(errors));
-              }
-              Logger.info(nuevoUsuario);
-            } catch (error) {
-              Logger.error("Error al crear el usuario");
-              Logger.error(error);
-              return reject(response().json(error));
+  async handle(req: Request): Promise<Response> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let nuevoUsuario: Usuario = new Usuario(req.body);
+        const errors = await validate(nuevoUsuario);
+        let erroresResponse = [];
+        if (errors.length > 0) {
+          for (let error of errors) {
+            let errorBody = { columna: error.property, errores: Array<string>()  };
+            Logger.error(error.property);
+            let errorConstraints = error.constraints;
+            for (const key in errorConstraints) {
+              errorBody.errores.push(errorConstraints[key]);
+              
             }
-      
-            return resolve(response().json({}));
-          });
+            erroresResponse.push(errorBody);
+          }
 
-        
-    } 
+          let errorResponse = { message: 'Error validando los campos', errores: erroresResponse };
+
+          Logger.error("Error al validar el usuario");
+          //Logger.error(errors);
+          return resolve(response(errorResponse,422));
+        }
+        else{
+            Logger.info("Usuario validado correctamente");
+        }
+        Logger.info(nuevoUsuario);
+      } catch (error) {
+        let errorResponse = { message: 'Error tecnico, el servidor no pudo procesar su solicitud', error: error };
+        return resolve(response(errorResponse,500));
+      }
+
+      return resolve(response().json({}));
+    });
+  }
 }
