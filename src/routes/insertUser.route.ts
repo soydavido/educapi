@@ -9,6 +9,7 @@ import {
 import { getEnv, Lang } from "@ant/framework";
 import { Usuario } from "../models/Usuario.model";
 import { validate } from "class-validator";
+import { TbUsuario } from "../database/models/TbUsuario";
 
 export class InsertUser extends BaseRoute {
   url = "/api/v1/insertUser";
@@ -17,6 +18,7 @@ export class InsertUser extends BaseRoute {
 
   async handle(req: Request): Promise<Response> {
     return new Promise(async (resolve, reject) => {
+      let nuevoUsuario: Usuario;
       try {
         let nuevoUsuario: Usuario = new Usuario(req.body);
         const errors = await validate(nuevoUsuario);
@@ -28,12 +30,11 @@ export class InsertUser extends BaseRoute {
             let errorConstraints = error.constraints;
             for (const key in errorConstraints) {
               errorBody.errores.push(errorConstraints[key]);
-              
             }
             erroresResponse.push(errorBody);
           }
 
-          let errorResponse = { message: 'Error validando los campos', errores: erroresResponse };
+          let errorResponse = { message: 'Error validando los campos', primerError: erroresResponse[0].errores[0], errores: erroresResponse };
 
           Logger.error("Error al validar el usuario");
           //Logger.error(errors);
@@ -43,12 +44,15 @@ export class InsertUser extends BaseRoute {
             Logger.info("Usuario validado correctamente");
         }
         Logger.info(nuevoUsuario);
+        let usuarioBd = new TbUsuario(nuevoUsuario)
+        usuarioBd.save();
       } catch (error) {
         let errorResponse = { message: 'Error tecnico, el servidor no pudo procesar su solicitud', error: error };
         return resolve(response(errorResponse,500));
       }
 
-      return resolve(response().json({}));
+
+      return resolve(response({message: 'Usuario insertado correctamente'},200));
     });
   }
 }

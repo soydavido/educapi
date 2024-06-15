@@ -14,9 +14,8 @@ import {
 
 
 export class Usuario {
-  @IsNotEmpty()
-  @IsString()
-  id_usuario!: number;
+  //@IsNotEmpty()
+  id_usuario?: number;
 
   @IsNotEmpty()
   @IsString()
