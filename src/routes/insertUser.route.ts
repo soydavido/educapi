@@ -47,7 +47,7 @@ export class InsertUser extends BaseRoute {
         let usuarioBd = new TbUsuario(nuevoUsuario)
         usuarioBd.save();
       } catch (error) {
-        let errorResponse = { message: 'Error tecnico, el servidor no pudo procesar su solicitud', error: error };
+        let errorResponse = { message: 'Error tecnico, el servidor no pudo procesar su solicitud', primerError: 'Error guardando en BD', errores: error };
         return resolve(response(errorResponse,500));
       }
 
