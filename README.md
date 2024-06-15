@@ -1,2 +1,2 @@
-# ant
-NodeJS + (Redis|Kafka) tiny microservices framework (Small and Strong as an Ant)
+# EducAPI
+API realizada para el proyecto final de el curso **Avanzado de Espacio Educa**
