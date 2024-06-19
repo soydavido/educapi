@@ -25,7 +25,7 @@ export class InsertUser extends BaseRoute {
         let erroresResponse = [];
         if (errors.length > 0) {
           for (let error of errors) {
-            let errorBody = { columna: error.property, errores: Array<string>()  };
+            let errorBody = { columna: error.property, errores: Array<string>() };
             Logger.error(error.property);
             let errorConstraints = error.constraints;
             for (const key in errorConstraints) {
@@ -38,20 +38,20 @@ export class InsertUser extends BaseRoute {
 
           Logger.error("Error al validar el usuario");
           //Logger.error(errors);
-          return resolve(response(errorResponse,422));
+          return resolve(response(errorResponse, 200));
         }
-        else{
-            Logger.info("Usuario validado correctamente");
+        else {
+          Logger.info("Usuario validado correctamente");
         }
         Logger.info(nuevoUsuario);
         let usuarioBd = new TbUsuario(nuevoUsuario)
         usuarioBd.save();
       } catch (error) {
         let errorResponse = { message: 'Error tecnico, el servidor no pudo procesar su solicitud', primerError: 'Error guardando en BD', errores: error };
-        return resolve(response(errorResponse,500));
+        return resolve(response(errorResponse, 500));
       }
 
-      return resolve(response({message: 'Usuario insertado correctamente'},200));
+      return resolve(response({ message: 'Usuario insertado correctamente' }, 200));
     });
   }
 }
