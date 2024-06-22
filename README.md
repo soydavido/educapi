@@ -12,7 +12,7 @@ Primero debemos abrir una ventana de comandos (cmd), posteriormente a traves del
   git clone https://github.com/soydavido/educapi
   cd educapi
   npm install 
-  npm run dev
+  npm run serve
 ```
     
 Estos comandos levantaran la API en el puerto 3200 de nuestra maquina, quedando lista para escuchar peticiones en el siguiente host:
