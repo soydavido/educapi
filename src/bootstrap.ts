@@ -25,6 +25,7 @@ import { TestListener } from "./listeners/test.listener";
 import { GetAllUsers } from "./routes/getAllUsers.route";
 import { InsertUser } from "./routes/insertUser.route";
 import { UpdateUser } from "./routes/updateUser.route";
+import { DeleteUser } from "./routes/deleteUser.route";
 
 export class Boostrap implements BoostrapInterface {
     /**
@@ -45,6 +46,7 @@ export class Boostrap implements BoostrapInterface {
         GetAllUsers,
         InsertUser,
         UpdateUser,
+        DeleteUser
     ];
 
     /**
