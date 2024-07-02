@@ -29,6 +29,8 @@ Para consultar los usuarios existentes, debes hacer una peticion al endpoint de:
 
 `/api/v1/getAllUsers`
 
+Con el metodo **GET**
+
 Y recibiras una respuesta del siguiente estilo, acompañada de un status **200**:
 
 ```
@@ -78,6 +80,8 @@ Para crear un nuevo usuario, debes hacer una peticion al endpoint de:
 
 `/api/v1/insertUser`
 
+Con el metodo **POST**
+
 El body que se debe mandar es el siguiente:
 ```
 {
@@ -124,6 +128,8 @@ Para actualizar un usuario existente, debes hacer una peticion al endpoint de:
 
 `/api/v1/updateUser`
 
+Con el metodo **PUT**
+
 ```
 {
     "id_usuario": "6",
@@ -168,6 +174,8 @@ Si no se envia la informacion correctamente, se recibira el siguiente mensaje, a
 Para eliminar un usuario, debes hacer una peticion al endpoint de:
 
 `/api/v1/deleteUser`
+
+Con el metodo **DELETE**
 
 Este mensaje no lleva Body, sin embargo en el endpoint, se usara algo llamado parametros, lo cual se ve la siguiente forma:
 ```
