@@ -162,3 +162,33 @@ Si no se envia la informacion correctamente, se recibira el siguiente mensaje, a
     ]
 }
 ```
+
+#### Eliminar un usuario
+
+Para eliminar un usuario, debes hacer una peticion al endpoint de:
+
+`/api/v1/deleteUser`
+
+Este mensaje no lleva Body, sin embargo en el endpoint, se usara algo llamado parametros, lo cual se ve la siguiente forma:
+```
+http://xxx:3200/api/v1/delete?id=1
+```
+
+Siendo el endpoint hasta el `delete` y despues del signo de pregunta, se enviaran los parametros, en este caso, tenemos un unico parametro, llamado **id** el cual en este caso tiene un valor de **1**
+
+Si se envia la informacion correctamente, se recibira el siguiente mensaje, acompañado de un status **200**:
+
+```
+{
+    "message": "Usuario eliminado correctamente"
+}
+```
+
+Si se intenta eliminar un usuario que no existe, el servidor respondera el siguiente mensaje, con un codigo de error **404**:
+
+```
+{
+    "message": "No se encontro el usuario a eliminar"
+}
+```
+

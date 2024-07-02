@@ -18,16 +18,18 @@ export class DeleteUser extends BaseRoute {
 
     async handle(req: Request): Promise<Response> {
         
-        let id = req.query.id;
+        let id = req?.query?.id ? req.query.id : 0;
 
         return new Promise(async (resolve, reject) => {
             
             try {
                 let usuarioBD = await TbUsuario.find({ where: { id_usuario: Number(id) } });
-                Logger.info(usuarioBD); 
+                Logger.info(usuarioBD);
+                if(usuarioBD.length <= 0)
+                    throw new Error('No se encontro el usuario a eliminar'); 
                 await usuarioBD[0].remove();   
             } catch (error) {
-                let errorResponse = { message: 'No se encontro el usuario a eliminar' };
+                let errorResponse = { message: 'No se encontro el usuario a eliminar', error: error };
                 return resolve(response(errorResponse, 404));
             }
 
