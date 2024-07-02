@@ -38,7 +38,7 @@ export class InsertUser extends BaseRoute {
 
           Logger.error("Error al validar el usuario");
           //Logger.error(errors);
-          return resolve(response(errorResponse, 200));
+          return resolve(response(errorResponse, 400));
         }
         else {
           Logger.info("Usuario validado correctamente");
