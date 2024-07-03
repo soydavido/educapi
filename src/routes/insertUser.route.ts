@@ -51,7 +51,7 @@ export class InsertUser extends BaseRoute {
         return resolve(response(errorResponse, 500));
       }
 
-      return resolve(response({ message: 'Usuario insertado correctamente' }, 200));
+      return resolve(response({ message: 'Usuario insertado correctamente', status: 200 }, 200));
     });
   }
 }
