@@ -26,6 +26,7 @@ import { GetAllUsers } from "./routes/getAllUsers.route";
 import { InsertUser } from "./routes/insertUser.route";
 import { UpdateUser } from "./routes/updateUser.route";
 import { DeleteUser } from "./routes/deleteUser.route";
+import { TokenCheck } from "./routes/tokenCheck.route";
 
 export class Boostrap implements BoostrapInterface {
     /**
@@ -46,7 +47,8 @@ export class Boostrap implements BoostrapInterface {
         GetAllUsers,
         InsertUser,
         UpdateUser,
-        DeleteUser
+        DeleteUser,
+        TokenCheck
     ];
 
     /**
