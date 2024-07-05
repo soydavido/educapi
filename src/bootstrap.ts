@@ -1,11 +1,11 @@
 import DatabaseProvider from "./providers/database.provider";
-import { HomeRoute } from "./routes/home.route";
-import { InfoRoute } from "./routes/info.route";
+import { HomeRoute } from "./routes/v1/home.route";
+import { InfoRoute } from "./routes/v1/info.route";
 import LogProvider from "./providers/log.provider";
 import CacheProvider from "./providers/cache.provider";
 import RouterProvider from "./providers/router.provider";
 import { TestWorker } from "./workers/test.worker";
-import { JobsMonitorRoute } from "./routes/jobs_monitor.route";
+import { JobsMonitorRoute } from "./routes/v1/jobs_monitor.route";
 import {
     BoostrapInterface,
     RouteContract,
@@ -22,11 +22,11 @@ import { TestConsumer } from "./consumers/test.consumer";
 import { EventProvider } from "./providers/event.provider";
 import { ListenerContract } from "@ant/framework/lib/src/events";
 import { TestListener } from "./listeners/test.listener";
-import { GetAllUsers } from "./routes/getAllUsers.route";
-import { InsertUser } from "./routes/insertUser.route";
-import { UpdateUser } from "./routes/updateUser.route";
-import { DeleteUser } from "./routes/deleteUser.route";
-import { TokenCheck } from "./routes/tokenCheck.route";
+import { GetAllUsers } from "./routes/v1/getAllUsers.route";
+import { InsertUser } from "./routes/v1/insertUser.route";
+import { UpdateUser } from "./routes/v1/updateUser.route";
+import { DeleteUser } from "./routes/v1/deleteUser.route";
+import { TokenCheck } from "./routes/v1/tokenCheck.route";
 
 export class Boostrap implements BoostrapInterface {
     /**

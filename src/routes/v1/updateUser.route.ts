@@ -7,9 +7,9 @@ import {
     Request,
 } from "@ant/framework";
 import { getEnv, Lang } from "@ant/framework";
-import { Usuario } from "../models/Usuario.model";
+import { Usuario } from "../../models/Usuario.model";
 import { validate } from "class-validator";
-import { TbUsuario } from "../database/models/TbUsuario";
+import { TbUsuario } from "../../database/models/TbUsuario";
 
 export class UpdateUser extends BaseRoute {
     url = "/api/v1/updateUser";

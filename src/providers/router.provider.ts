@@ -1,6 +1,4 @@
 import express from "express";
-import compression from "compression";
-import cors from "cors";
 import {
     ServiceProvider,
     RouterFacade,
@@ -9,23 +7,36 @@ import {
     Lang,
     logCatchedError,
     RouteContract,
-    logCatchedException
+    logCatchedException,
+    MiddlewareContract,
+    ErrorResponse,
+    RouterConfig,
+    getEnv
 } from "@ant/framework";
 import {
     Response as ExpressResponse,
     Request as ExpressRequest,
+    NextFunction,
+    RequestHandler
 } from "express";
+// import { GlobalMiddlewares } from "../http/middlewares/global.middleware";
+import path from "path";
+import fs from "fs";
+import https from "https";
+import { GlobalMiddlewares } from "../middlewares/global.middleware";
+import { OverrideRequestMiddleware } from "../middlewares/override_request.middleware";
 
 export default class RouterProvider extends ServiceProvider {
     protected router = express();
+    protected middlewares: (new () => MiddlewareContract)[] = [
+        ...GlobalMiddlewares,
+        OverrideRequestMiddleware,
+    ];
 
     boot(): Promise<void> {
         return new Promise((resolve) => {
             this.router
-                .use(express.json())
-                .use(cors())
-                .use(compression())
-                .use(express.text({ type: "application/xml" }))
+                .use(this.instanceMiddlewares(this.middlewares))
             ;
 
             const config = routerConfig();
@@ -38,7 +49,7 @@ export default class RouterProvider extends ServiceProvider {
                         count: count.toString()
                     }));
 
-                    const server = this.router.listen(config.port, () => {
+                    const server = this.createHttpServer(config).listen(config.port, () => {
                         Logger.info(Lang.__("Http server is running at [{{scheme}}://{{host}}:{{port}}]", config));
                         
                         resolve();
@@ -53,12 +64,6 @@ export default class RouterProvider extends ServiceProvider {
         });
     }
 
-    /**
-     * @todo COULD be moved to a provider.
-     * 
-     * @param routeClasses 
-     * @returns 
-     */
     public setRoutes(routeClasses:  (new() => RouteContract)[]): Promise<number> {
         return new Promise((resolve, reject) => {
             if (routeClasses.length > 0) {
@@ -79,7 +84,7 @@ export default class RouterProvider extends ServiceProvider {
 
                     Logger.audit(Lang.__("Preparing route [{{name}} => ({{method}}) {{scheme}}://{{host}}:{{port}}{{{endpoint}}}].", routeData));
 
-                    this.router[instance.method](instance.url, (req: ExpressRequest, res: ExpressResponse) => {
+                    this.router[instance.method](instance.url, this.instanceMiddlewares(instance.middlewares), (req: ExpressRequest, res: ExpressResponse) => {
                         Logger.debug(Lang.__("Request received in [{{name}} => ({{method}}) {{scheme}}://{{host}}:{{port}}{{{endpoint}}}].", routeData));
                         Logger.trace(Lang.__("Client request: "));
                         Logger.trace({
@@ -101,15 +106,25 @@ export default class RouterProvider extends ServiceProvider {
                                 Logger.trace(handler.getData());
 
                                 instance.onCompleted(req);
-                            }, (error) => {
-                                res.status(500).send(error);
+                            },
+                            (error) => {
+                                if (error instanceof ErrorResponse) {
+                                    error.send(res);
+                                } else {
+                                    res.status(500).send(error);
+                                }
 
                                 Logger.error(Lang.__("Error handling a request in [{{name}} => ({{method}}) {{scheme}}://{{host}}:{{port}}{{{endpoint}}}].", routeData));
                                 logCatchedError(error);
 
                                 instance.onFailed(req, error);
-                            }).catch((error) => {
-                                res.status(500).send(error);
+                            }
+                            ).catch((error) => {
+                                if (error instanceof ErrorResponse) {
+                                    error.send(res);
+                                } else {
+                                    res.status(500).send(error);
+                                }
 
                                 instance.onError(error);
 
@@ -130,5 +145,42 @@ export default class RouterProvider extends ServiceProvider {
                 });
             }
         });
+    }
+
+    protected instanceMiddlewares(middlewares: (new () => MiddlewareContract)[]): RequestHandler[] {
+        return middlewares.map(middleware => (req: ExpressRequest, res: ExpressResponse, next: NextFunction) => (new middleware).handle(req, res, next));
+    }
+
+    public createHttpServer(config: RouterConfig) {
+        if (config.scheme?.toLowerCase() == "https") {
+            if (
+                !fs.existsSync(path.join(__dirname, getEnv("SSL_KEY_DIR"))) ||
+                !fs.existsSync(path.join(__dirname, getEnv("SSL_CERT_DIR")))
+            ) {
+                throw new Error(Lang.__("Invalid ssl cert/key path."));
+            }
+
+            const options = {
+                passphrase: getEnv("SSL_PASSPHRASE"),
+                key: fs.readFileSync(path.join(__dirname, getEnv("SSL_KEY_DIR")), 'utf8'),
+                cert: fs.readFileSync(path.join(__dirname, getEnv("SSL_CERT_DIR")), 'utf8'),
+            };
+
+            return https.createServer(options, this.router)
+        }
+
+        return this.router;
+    }
+
+    public static getToken(req: ExpressRequest, type: "bearer" | "basic" = "bearer"): string | undefined {
+        const authorizationHeader = req.headers['authorization'];
+        if (!authorizationHeader) {
+            return undefined;
+        }
+        const parts = authorizationHeader.split(' ');
+        if (parts.length !== 2 || parts[0].toLowerCase() !== type) {
+            return undefined;
+        }
+        return parts[1];
     }
 }

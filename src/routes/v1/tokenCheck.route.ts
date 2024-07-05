@@ -5,17 +5,23 @@ import {
     response,
     Response,
     Request,
+    MiddlewareContract,
   } from "@ant/framework";
   import { getEnv, Lang } from "@ant/framework";
-  import { Usuario } from "../models/Usuario.model";
+  import { Usuario } from "../../models/Usuario.model";
   import { validate } from "class-validator";
-  import { TbUsuario } from "../database/models/TbUsuario";
+  import { TbUsuario } from "../../database/models/TbUsuario";
+import { CheckTokenMiddleware } from "../../middlewares/check_token.middleware";
   
   export class TokenCheck extends BaseRoute {
     url = "/api/v1/tokenCheck";
   
     method: Method = "get";
   
+    middlewares: (new () => MiddlewareContract)[] = [
+      CheckTokenMiddleware,
+    ];
+    
     async handle(req: Request): Promise<Response> {
       return new Promise(async (resolve, reject) => {
         
@@ -25,7 +31,7 @@ import {
         let token = req.headers.authorization;
 
         //Token exists
-        if (token == null)
+        /* if (token == null)
           return resolve(response({ message: 'No se ha enviado el token' }, 400));
 
         //Token type validation
@@ -56,7 +62,7 @@ import {
             return resolve(response({ message: 'Error al decodificar el token de acceso' }, 500));
         }
 
-        Logger.trace(headers);
+        Logger.trace(headers); */
 
        return resolve(response({ message: 'Validado correctamente' }, 200));
 

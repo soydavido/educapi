@@ -9,7 +9,7 @@ import {
     getEnv,
     Lang
 } from "@ant/framework";
-import { TbUsuario } from "../database/models/TbUsuario";
+import { TbUsuario } from "../../database/models/TbUsuario";
 
 export class GetAllUsers extends BaseRoute {
     url = "/api/v1/getAllUsers";
