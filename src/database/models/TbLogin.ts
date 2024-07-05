@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { getEnv, Model, now } from "@ant/framework";
 
 @Entity("tb_login")
-export class TbUsuario extends Model {
+export class TbLogin extends Model {
   @PrimaryGeneratedColumn()
   id_login!: number;
 
