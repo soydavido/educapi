@@ -18,9 +18,11 @@ export default class DatabaseProvider extends ServiceProvider {
     return new Promise((resolve, reject) => {
       const sqliteCon = new DataSource({
         type: "sqlite",
-        database: "educapi",
+        database: getEnv("DB_DATABASE","ant"),
         entities: [path.join(__dirname, "..", "database/models/**/**.*")],
         synchronize: true,
+        logging: false,
+        logger: getEnv("BD_DEBUG") === "true" ?  new CustomLogger() : undefined,
       });
 
       try {

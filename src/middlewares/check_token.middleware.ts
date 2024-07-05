@@ -23,13 +23,17 @@ export class CheckTokenMiddleware extends BaseMiddleware {
     const username = token.username;
     const password = token.password;
 
+    Logger.debug(username+' '+password);
+
     let userLogin = await TbLogin.find({
       where: { tx_username: username, tx_password: password },
     });
 
-   /*  if(userLogin.length <= 0){
+    Logger.info(userLogin);
+
+    if(userLogin.length <= 0){
       return response().unauthorized({ message: "El usuario o la contraseña no coinciden con alguno registrado en el sistema" }).send(res);
-    } */
+    }
 
     Logger.debug(userLogin);
 
