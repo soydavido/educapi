@@ -11,8 +11,8 @@ import { Usuario } from "../models/Usuario.model";
 import { validate } from "class-validator";
 import { TbUsuario } from "../database/models/TbUsuario";
 
-export class DeleteUser extends BaseRoute {
-    url = "/api/v1/deleteUser";
+export class DeleteAllUser extends BaseRoute {
+    url = "/api/v1/deleteAllUsers";
 
     method: Method = "delete";
 
@@ -23,17 +23,18 @@ export class DeleteUser extends BaseRoute {
         return new Promise(async (resolve, reject) => {
             
             try {
-                let usuarioBD = await TbUsuario.find({ where: { id_usuario: Number(id) } });
+                let usuarioBD = await TbUsuario.find();
                 Logger.info(usuarioBD);
                 if(usuarioBD.length <= 0)
                     throw new Error('No se encontro el usuario a eliminar'); 
-                await usuarioBD[0].remove();   
+                usuarioBD.forEach((element) => element.remove());
+                
             } catch (error) {
                 let errorResponse = { message: 'No se encontro el usuario a eliminar', error: error };
                 return resolve(response(errorResponse, 404));
             }
 
-            return resolve(response({ message: 'Usuario eliminado correctamente' }, 200));
+            return resolve(response({ message: 'Usuarios eliminado correctamente' }, 200));
             
         });
     }
