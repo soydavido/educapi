@@ -50,10 +50,8 @@ export class UpdateUser extends BaseRoute {
 
                 userUpdate.tx_nombre = nuevoUsuario.tx_nombre;
                 userUpdate.tx_apellido = nuevoUsuario.tx_apellido;
-                userUpdate.dt_fecha_nacimiento = nuevoUsuario.dt_fecha_nacimiento;
                 userUpdate.st_usuario = nuevoUsuario.st_usuario;
                 userUpdate.tx_src_foto = nuevoUsuario.tx_src_foto;
-                userUpdate.tx_alt_src_foto = nuevoUsuario.tx_alt_src_foto;
                 userUpdate.tx_email = nuevoUsuario.tx_email;
                 userUpdate.id_documento = nuevoUsuario.id_documento;
 

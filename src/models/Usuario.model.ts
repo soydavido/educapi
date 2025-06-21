@@ -25,27 +25,19 @@ export class Usuario {
   @IsString()
   tx_apellido!: string;
 
-  @IsNotEmpty()
-  @IsDateString()
-  dt_fecha_nacimiento!: Date;
-
-  @IsNotEmpty()
+  //@IsNotEmpty()
   @IsString()
   st_usuario!: string;
 
-  @IsNotEmpty()
+  //@IsNotEmpty()
   @IsString()
   tx_src_foto!: string;
-
-  @IsNotEmpty()
-  @IsString()
-  tx_alt_src_foto!: string;
 
   @IsNotEmpty()
   @IsEmail()
   tx_email!: string;
 
-  @IsNotEmpty()
+  //@IsNotEmpty()
   @IsNumber()
   id_documento!: number;
 
@@ -54,10 +46,8 @@ export class Usuario {
     this.id_usuario = data.id_usuario;
     this.tx_nombre = data.tx_nombre;
     this.tx_apellido = data.tx_apellido;
-    this.dt_fecha_nacimiento = data.dt_fecha_nacimiento;
-    this.st_usuario = data.st_usuario;
+    this.st_usuario = data.st_usuario || "active" ;
     this.tx_src_foto = data.tx_src_foto;
-    this.tx_alt_src_foto = data.tx_alt_src_foto;
     this.tx_email = data.tx_email;
     this.id_documento = data.id_documento;
   }
