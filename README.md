@@ -1,26 +1,26 @@
-# EducAPI &middot; CRUD Usuarios [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) #
+# 🚀 EducAPI · CRUD Usuarios [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-API realizada para el proyecto final de el curso **Avanzado de Espacio Educa**.
+API realizada para el proyecto final del curso **Avanzado de Espacio Educa**.
 
-La finalidad de este proyecto, es realizar un CRUD de Usuarios desde un proyecto de React.js.
+La finalidad de este proyecto es realizar un CRUD de Usuarios desde un proyecto de React.js.
 
-# ¿Como consumir la API?
+---
 
-La API se encuentra desplegada en la web, lo que quiere decir que la podran usar desde su casa en todo momento.
+## 🌐 ¿Cómo consumir la API?
 
-PD: Puede ocurrir que al realizar la primera peticion, tarde un poco en responder, ya que el servicio inicio On Demand (solo cuando es requerido).
+La API está desplegada en la web, por lo que puedes usarla desde cualquier lugar.
 
-## Consultar usuarios existentes
+> ⚠️ **Nota:** Puede que la primera petición tarde un poco en responder, ya que el servicio inicia On Demand (solo cuando es requerido).
 
-Para consultar los usuarios existentes, debes hacer una peticion al endpoint de:
+---
 
-`https://todolist-api-9ymb.onrender.com/api/v1/getAllUsers`
+## 👥 Consultar usuarios existentes
 
-Con el metodo **GET**
+- **Endpoint:**  
+  `GET https://todolist-api-9ymb.onrender.com/api/v1/getAllUsers`
 
-Y recibiras una respuesta del siguiente estilo, acompañada de un status **200**:
-
-```
+- **Respuesta exitosa:**
+```json
 {
   "message": "Usuarios consultados correctamente",
   "usuarios": [
@@ -64,125 +64,121 @@ Y recibiras una respuesta del siguiente estilo, acompañada de un status **200**
 }
 ```
 
-## Crear un nuevo usuario
+---
 
-Para crear un nuevo usuario, debes hacer una peticion al endpoint de:
+## ➕ Crear un nuevo usuario
 
-`https://todolist-api-9ymb.onrender.com/api/v1/insertUser`
+- **Endpoint:**  
+  `POST https://todolist-api-9ymb.onrender.com/api/v1/insertUser`
 
-Con el metodo **POST**
-
-El body que se debe mandar es el siguiente:
-```
+- **Body ejemplo:**
+```json
 {
-    "tx_nombre": "John",
-    "tx_apellido": "Smith",
-    "tx_src_foto": "/path/to/photo.jpg",
-    "tx_email": "johndoe@example.com",
-    "id_documento": 123456789
-}
-
-```
-
-Si se envia la informacion correctamente, se recibira el siguiente mensaje, acompañado de un status **200**:
-
-```
-{
-    "message": "Usuario insertado correctamente"
+  "tx_nombre": "John",
+  "tx_apellido": "Smith",
+  "tx_src_foto": "/path/to/photo.jpg",
+  "tx_email": "johndoe@example.com",
+  "id_documento": 123456789
 }
 ```
 
-Si no se envia la informacion correctamente, se recibira el siguiente mensaje, acompañado de un status **400** o **500**:
-
-```
+- **Respuesta exitosa:**
+```json
 {
-    "message": "Error validando los campos",
-    "primerError": "tx_nombre must be a string",
-    "errores": [
-        {
-            "columna": "tx_nombre",
-            "errores": [
-                "tx_nombre must be a string"
-            ]
-        }
-    ]
+  "message": "Usuario insertado correctamente"
 }
 ```
 
-
-## Actualizar un usuario existente
-
-Para actualizar un usuario existente, debes hacer una peticion al endpoint de:
-
-`https://todolist-api-9ymb.onrender.com/api/v1/updateUser`
-
-Con el metodo **PUT**
-
-```
+- **Respuesta de error:**
+```json
 {
-    "id_usuario": "8",
-    "tx_nombre": "Alejandro",
-    "tx_apellido": "Perez",
-    "st_usuario": "active",
-    "tx_src_foto": "/path/to/photo.jpg",
-    "tx_email": "johndoe@example.com",
-    "id_documento": 987654321
+  "message": "Error validando los campos",
+  "primerError": "tx_nombre must be a string",
+  "errores": [
+    {
+      "columna": "tx_nombre",
+      "errores": [
+        "tx_nombre must be a string"
+      ]
+    }
+  ]
 }
 ```
 
-Si se envia la informacion correctamente, se recibira el siguiente mensaje, acompañado de un status **200**:
+---
 
-```
+## ✏️ Actualizar un usuario existente
+
+- **Endpoint:**  
+  `PUT https://todolist-api-9ymb.onrender.com/api/v1/updateUser`
+
+- **Body ejemplo:**
+```json
 {
-    "message": "Usuario actualizado correctamente"
+  "id_usuario": "8",
+  "tx_nombre": "Alejandro",
+  "tx_apellido": "Perez",
+  "st_usuario": "active",
+  "tx_src_foto": "/path/to/photo.jpg",
+  "tx_email": "johndoe@example.com",
+  "id_documento": 987654321
 }
 ```
 
-Si no se envia la informacion correctamente, se recibira el siguiente mensaje, acompañado de un status **400** o **500**:
-
-```
+- **Respuesta exitosa:**
+```json
 {
-    "message": "Error validando los campos",
-    "primerError": "tx_apellido must be a string",
-    "errores": [
-        {
-            "columna": "tx_apellido",
-            "errores": [
-                "tx_apellido must be a string"
-            ]
-        }
-    ]
+  "message": "Usuario actualizado correctamente"
 }
 ```
 
-## Eliminar un usuario
-
-Para eliminar un usuario, debes hacer una peticion al endpoint de:
-
-`/api/v1/deleteUser`
-
-Con el metodo **DELETE**
-
-Este mensaje no lleva Body, sin embargo en el endpoint, se usara algo llamado parametros, lo cual se ve la siguiente forma:
-```
-https://todolist-api-9ymb.onrender.com/api/v1/deleteUser?id=1
-```
-
-Siendo el endpoint hasta el `delete` y despues del signo de pregunta, se enviaran los parametros, en este caso, tenemos un unico parametro, llamado **id** el cual en este caso tiene un valor de **1**
-
-Si se envia la informacion correctamente, se recibira el siguiente mensaje, acompañado de un status **200**:
-
-```
+- **Respuesta de error:**
+```json
 {
-    "message": "Usuario eliminado correctamente"
+  "message": "Error validando los campos",
+  "primerError": "tx_apellido must be a string",
+  "errores": [
+    {
+      "columna": "tx_apellido",
+      "errores": [
+        "tx_apellido must be a string"
+      ]
+    }
+  ]
 }
 ```
 
-Si se intenta eliminar un usuario que no existe, el servidor respondera el siguiente mensaje, con un codigo de error **404**:
+---
 
-```
+## 🗑️ Eliminar un usuario
+
+- **Endpoint:**  
+  `DELETE https://todolist-api-9ymb.onrender.com/api/v1/deleteUser?id=1`
+
+  > El parámetro `id` se pasa en la URL como query string.
+
+- **Respuesta exitosa:**
+```json
 {
-    "message": "No se encontro el usuario a eliminar"
+  "message": "Usuario eliminado correctamente"
 }
 ```
 
+- **Respuesta si el usuario no existe:**
+```json
+{
+  "message": "No se encontro el usuario a eliminar"
+}
+```
+
+---
+
+## 📝 Notas
+
+- Todos los endpoints devuelven respuestas en formato JSON.
+- Los códigos de estado HTTP (`200`, `400`, `404`, `500`) indican el resultado de la operación.
+- Puedes usar herramientas como [Postman](https://www.postman.com/) o [Insomnia](https://insomnia.rest/) para probar la API.
+
+---
+
+💻 Hecho con ❤️ para la comunidad de Espacio Educa
