@@ -17,7 +17,7 @@ La API está desplegada en la web, por lo que puedes usarla desde cualquier luga
 ## 👥 Consultar usuarios existentes
 
 - **Endpoint:**  
-  `GET https://todolist-api-9ymb.onrender.com/api/v1/getAllUsers`
+  `GET https://educapi.onrender.com/api/v1/getAllUsers`
 
 - **Respuesta exitosa:**
 ```json
@@ -69,7 +69,7 @@ La API está desplegada en la web, por lo que puedes usarla desde cualquier luga
 ## ➕ Crear un nuevo usuario
 
 - **Endpoint:**  
-  `POST https://todolist-api-9ymb.onrender.com/api/v1/insertUser`
+  `POST https://educapi.onrender.com/api/v1/insertUser`
 
 - **Body ejemplo:**
 ```json
@@ -110,7 +110,7 @@ La API está desplegada en la web, por lo que puedes usarla desde cualquier luga
 ## ✏️ Actualizar un usuario existente
 
 - **Endpoint:**  
-  `PUT https://todolist-api-9ymb.onrender.com/api/v1/updateUser`
+  `PUT https://educapi.onrender.com/api/v1/updateUser`
 
 - **Body ejemplo:**
 ```json
@@ -153,7 +153,7 @@ La API está desplegada en la web, por lo que puedes usarla desde cualquier luga
 ## 🗑️ Eliminar un usuario
 
 - **Endpoint:**  
-  `DELETE https://todolist-api-9ymb.onrender.com/api/v1/deleteUser?id=1`
+  `DELETE https://educapi.onrender.com/api/v1/deleteUser?id=1`
 
   > El parámetro `id` se pasa en la URL como query string.
 
